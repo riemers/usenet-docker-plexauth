@@ -7,6 +7,7 @@
 * [linuxserver/hydra](https://github.com/linuxserver/docker-hydra) - NZBHydra
 * [linuxserver/radarr](https://github.com/linuxserver/docker-radarr) - Radarr
 * [linuxserver/nzbget](https://github.com/linuxserver/docker-nzbget) - NZBGet
+* [plexinc/pms-docker](https://github.com/plexinc/pms-docker) - Plex (Official docker image)
 * [portainer/portainer](https://github.com/portainer/portainer) - Portainer
 
 ## Original note
