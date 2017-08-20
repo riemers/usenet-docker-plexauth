@@ -1,0 +1,128 @@
+version: '2'
+services:
+    plexauth:
+        container_name: plexauth
+        build:
+          context: ./plexauth
+        volumes:
+            - ${CONFIG}/plexauth/config.ini.php:/usr/share/nginx/html/plexauth/inc/config.ini.php
+            - ${CONFIG}/plexauth/footer.php:/usr/share/nginx/html/plexauth/inc/footer.php
+            - ${CONFIG}/plexauth/nav.php:/usr/share/nginx/html/plexauth/inc/nav.php
+            - ${CONFIG}/plexauth/nginx.conf:/etc/nginx/conf.d/nginx.conf
+        ports:
+            - 80:80
+            - 443:443
+
+    plex:
+        container_name: plex
+        image: plexinc/pms-docker:plexpass
+        restart: unless-stopped
+        ports:
+            - 8443:32400/tcp
+            - 3005:3005/tcp
+            - 8324:8324/tcp
+            - 32469:32469/tcp
+            - 1900:1900/udp
+            - 32410:32410/udp
+            - 32412:32412/udp
+            - 32413:32413/udp
+            - 32414:32414/udp
+        hostname: Unity
+        volumes:
+            - ${CONFIG}/plex/database:/config
+            - ${DATA}/transcode/temp:/transcode
+            - ${DATA}/data:/data
+        environment:
+            - TZ=Europe/Amsterdam
+            - PLEX_CLAIM=""
+            - ADVERTISE_IP=${ADVERTISEIP}
+            - PUID=${PUID}
+            - PGID=${PGID}
+        restart: unless-stopped
+
+    sonarr:
+        image: linuxserver/sonarr
+        container_name: sonarr
+        volumes:
+            - ${CONFIG}/sonarr:/config
+            - /etc/localtime:/etc/localtime:ro
+            - ${DATA}/data:/data
+            - ${DATA}/Downloads/complete:/downloads
+        environment:
+            - PUID=${PUID}
+            - PGID=${PGID}
+        restart: unless-stopped
+
+    plexpy:
+        image: linuxserver/plexpy
+        container_name: plexpy
+        volumes:
+            - ${DATA}/data:/data
+            - ${CONFIG}/plexpy:/config
+            - /etc/localtime:/etc/localtime:ro
+            - ${CONFIG}/plex/database/Library/Application Support/Plex Media Server/Logs:/logs:ro
+        environment:
+            - PUID=${PUID}
+            - PGID=${PGID}
+        restart: unless-stopped
+
+    nzbhydra:
+        image: linuxserver/hydra
+        container_name: nzbhydra
+        volumes:
+            - ${CONFIG}/nzbhydra:/config
+            - ${DATA}/Downloads:/downloads
+            - /etc/localtime:/etc/localtime:ro
+        restart: unless-stopped
+
+    radarr:
+        image: linuxserver/radarr
+        container_name: radarr
+        volumes:
+            - ${CONFIG}/radarr:/config
+            - ${DATA}/data:/data
+            - ${DATA}/Downloads:/downloads
+            - /etc/localtime:/etc/localtime:ro
+            #- 7878:7878
+        environment:
+            - PUID=${PUID}
+            - PGID=${PGID}
+        restart: unless-stopped
+
+    ombi:
+        image: linuxserver/ombi
+        container_name: ombi
+        volumes:
+            - ${CONFIG}/ombi:/config
+            - /etc/localtime:/etc/localtime:ro
+            #    - 3579:3579
+        environment:
+            - PUID=${PUID}
+            - PGID=${PGID}
+        restart: unless-stopped
+
+    nzbget:
+        image: linuxserver/nzbget
+        container_name: nzbget
+        volumes:
+            - ${CONFIG}/nzbget:/config
+            - ${DATA}/Downloads/complete:/complete
+            - ${DATA}/Downloads:/downloads
+            #    - 6789:6789
+        environment:
+            - PUID=${PUID}
+            - PGID=${PGID}
+        restart: unless-stopped
+
+    portainer:
+        image: portainer/portainer
+        container_name: portainer
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            #    - 9000:9000
+        restart: unless-stopped
+    #imdbtop250:
+    #   build:
+    #      context: ./imdbtop250
+    #    volumes:
+    #        - ./requirements.txt:/requirements.txt
