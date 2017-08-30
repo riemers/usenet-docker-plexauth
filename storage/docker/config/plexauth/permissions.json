@@ -1,0 +1,30 @@
+{
+  "438738": {
+    "permissions": [
+      "admin"
+    ]
+  },
+  "203345": {
+    "permissions": [
+      "sickrage",
+      "couchpotato",
+      "sonarr"
+    ]
+  },
+  "template": {
+    "permissions": [
+      "admin",
+      "dev",
+      "sponsor",
+      "terminal",
+      "mylar",
+      "radarr",
+      "sickrage",
+      "couchpotato",
+      "sonarr",
+      "nzbhydra",
+      "plexpy",
+      "nzbget"
+    ]
+  }
+}
