@@ -42,5 +42,6 @@
 
 ## Overal setup
 * When all is running, you have to link nzbhydra to sonarr/radarr and same goes for ombi to point to it (don't forget in ombi to set external url and basepath) 
+* If you need to startup a container to make some changes without nginx in front of it (because it doesn't work yet) add the PORT in the docker-compose to expose it, in most cases i left the port with a # in front of it, just for that purpose.
 
 Since most is a combination that start with PlexAuth, you can also find me there if you need a hand: https://discord.gg/dWcjsv6

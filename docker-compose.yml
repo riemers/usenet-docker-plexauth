@@ -145,23 +145,6 @@ services:
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
 
-#    filebot:
-#        image: coppit/filebot
-#        container_name: filebot
-#        volumes:
-#            - ${CONFIG}/filebot:/config
-#            - ${DATA}/data:/data
-#        ports:
-#            - 3389:3389/tcp
-#        # 8080:8080
-#        environment:
-#            - PUID=${PUID}
-#            - PGID=${PGID}
-#            - ADVERTISE_IP=${ADVERTISEIP}
-#            - WIDTH=1280
-#            - HEIGHT=720
-#        restart: unless-stopped
-
     spotweb:
         image: steynovich/spotweb:latest
         container_name: spotweb
